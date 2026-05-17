@@ -17,6 +17,7 @@ final class OperationsViewController: UIViewController {
         super.viewDidLoad()
         opsView.tableView.dataSource = self
         opsView.tableView.delegate   = self
+        opsView.onFilterChanged = { [weak self] in self?.reloadData() }
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: DataStore.dataChangedNotification, object: nil)
     }
 
@@ -29,7 +30,17 @@ final class OperationsViewController: UIViewController {
 private extension OperationsViewController {
     @objc func reloadData() {
         let cal = Calendar.current
-        let grouped = Dictionary(grouping: DataStore.shared.transactions) { cal.startOfDay(for: $0.date) }
+        let all = DataStore.shared.transactions
+
+        let filtered: [Transaction]
+        switch opsView.selectedFilter {
+        case 1: filtered = all.filter { $0.type == .income }
+        case 2: filtered = all.filter { $0.type == .expense }
+        case 3: filtered = all.filter { $0.type == .transfer }
+        default: filtered = all
+        }
+
+        let grouped = Dictionary(grouping: filtered) { cal.startOfDay(for: $0.date) }
         let sortedDays = grouped.keys.sorted(by: >)
         sections = sortedDays.map { day in
             let txs = (grouped[day] ?? []).sorted { $0.date > $1.date }

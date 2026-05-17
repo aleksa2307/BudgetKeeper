@@ -10,7 +10,8 @@ final class OperationsView: UIView {
     let tableView = UITableView(frame: .zero, style: .grouped)
 
     private let filters = ["Усі", "Доходи", "Витрати", "Перекази"]
-    private var selectedFilter = 0
+    var selectedFilter = 0
+    var onFilterChanged: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -94,6 +95,7 @@ private extension OperationsView {
                 updateFilterButton(btn, selected: btn.tag == selectedFilter)
             }
         }
+        onFilterChanged?()
     }
 }
 
