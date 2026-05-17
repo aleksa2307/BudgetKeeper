@@ -15,6 +15,38 @@
 		ED1EED312FB7C314002B3BF6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = ED1EED302FB7C314002B3BF6 /* SnapKit */; };
 		ED1EED342FB7C485002B3BF6 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1EED332FB7C485002B3BF6 /* OnboardingVC.swift */; };
 		ED1EED372FB7C496002B3BF6 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1EED362FB7C496002B3BF6 /* OnboardingView.swift */; };
+		8B9A242F38694384B64F63EB /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73978990A641868B8DFDC3 /* AppColors.swift */; };
+		4D782716FE47471895CD3542 /* CreatePINVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D28B6B8F12490992CC4B69 /* CreatePINVC.swift */; };
+		321585F536404B38981FF3AA /* CreatePINView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11F207AEECE47C2ABFC12D5 /* CreatePINView.swift */; };
+		0125E727791F4DC98866DA90 /* ConfirmPINVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399DED9EE1E0446CB6811305 /* ConfirmPINVC.swift */; };
+		A2B40D01BFCF4B7C939A7D6B /* ConfirmPINView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F523C90DAC994E3ABD3F5428 /* ConfirmPINView.swift */; };
+		066CCB269C014A2FAB242646 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E472C928BA97472DBB8E0756 /* MainTabBarController.swift */; };
+		389BFC5EC4C2422496B5F05F /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9954FAF04894B04C921D /* HomeVC.swift */; };
+		6AB75BBE349E44E895139341 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FE25D91DF4218AF9FEE0A /* HomeView.swift */; };
+		332DF4ED20E845F4AD89DA64 /* OperationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EC30C0853A4D18B872DC2F /* OperationsVC.swift */; };
+		9210EADC49D54437896B7364 /* OperationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A82CAE66AB4E55B5429B3A /* OperationsView.swift */; };
+		7E2C1E1BC553430BBDE23E71 /* AnalyticsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA705D50C67546E4A4A973AC /* AnalyticsVC.swift */; };
+		72FCA487E84C483398A4BF4E /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9254DC26A0B46DB8C0755BC /* AnalyticsView.swift */; };
+		7CA5A0542F8441B786CA5130 /* MoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC0D0B5B5D4285B56BA3D7 /* MoreVC.swift */; };
+		16108CE3CAFD4F63BDB01890 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F860C31CFF04BECA201EBDF /* MoreView.swift */; };
+		7BAEAF2B34A2491EBA759193 /* AccountsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731F6DFC9A34455EBD9E93A8 /* AccountsVC.swift */; };
+		53373D3AAC3C4F48B9640D2C /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70C800F9E2C4DF4BF203B7B /* AccountsView.swift */; };
+		6763B04CEF08475BA5F7B5E0 /* BudgetsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807D21B84571ABEA8E9C /* BudgetsVC.swift */; };
+		22B242EBEF6B4242B89F8EFD /* BudgetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF7F9ED777433798C6D966 /* BudgetsView.swift */; };
+		F1F6EF9610CD4FACACA0C472 /* GoalsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689189754BA64D608E026311 /* GoalsVC.swift */; };
+		C168FFFE71C6470BB1E4B341 /* GoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7471EDE08B1D4D6B8E6A0112 /* GoalsView.swift */; };
+		3DE9BE671CCA4035985A1162 /* RecurringPaymentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E337D231BC4059B4526EE5 /* RecurringPaymentsVC.swift */; };
+		3F3B7AD7E1084DC9A28A9015 /* RecurringPaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647CB96F130149A9A24B1B28 /* RecurringPaymentsView.swift */; };
+		62BD0CBAFD854C30B2B26A38 /* DebtsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0E5E1E68A9421DA57D7063 /* DebtsVC.swift */; };
+		9D1A2FABA3964191956E9C90 /* DebtsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB280CFDC4043D6A4E65E70 /* DebtsView.swift */; };
+		109B2CB0307E405DAFF39D22 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C51D6FEAE44802BB220DB8 /* SettingsVC.swift */; };
+		6C4BAE70F3E44E13A66266F8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C673C81FCEC44D4A27B4929 /* SettingsView.swift */; };
+		D36BD08C899647A6B29BDE82 /* NewOperationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18A21AB77740EEB8B5F84F /* NewOperationVC.swift */; };
+		69B2CA2032DA403FB1FED3F2 /* NewOperationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDFD392EA69486FBC419044 /* NewOperationView.swift */; };
+		58D6DBB2519D72D3FFD9B8C2 /* AppModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB96C65881DDA6E0DA3A515 /* AppModels.swift */; };
+		FBC293D86CBF9BD0976A51A0 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E055BCAB4AD4486C3FF3DC58 /* DataStore.swift */; };
+		578EBB4901166D8C907BBE25 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894484A0311A9571566EAF85 /* Extensions.swift */; };
+		A35F33F492A245797B73F4CC /* PINUnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD619A4F34FC0C0AF90ED54D /* PINUnlockViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +59,38 @@
 		ED1EED232FB7C272002B3BF6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ED1EED332FB7C485002B3BF6 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		ED1EED362FB7C496002B3BF6 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		BE73978990A641868B8DFDC3 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		95D28B6B8F12490992CC4B69 /* CreatePINVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePINVC.swift; sourceTree = "<group>"; };
+		E11F207AEECE47C2ABFC12D5 /* CreatePINView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePINView.swift; sourceTree = "<group>"; };
+		399DED9EE1E0446CB6811305 /* ConfirmPINVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPINVC.swift; sourceTree = "<group>"; };
+		F523C90DAC994E3ABD3F5428 /* ConfirmPINView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPINView.swift; sourceTree = "<group>"; };
+		E472C928BA97472DBB8E0756 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		98BF9954FAF04894B04C921D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		A59FE25D91DF4218AF9FEE0A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B5EC30C0853A4D18B872DC2F /* OperationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationsVC.swift; sourceTree = "<group>"; };
+		12A82CAE66AB4E55B5429B3A /* OperationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationsView.swift; sourceTree = "<group>"; };
+		CA705D50C67546E4A4A973AC /* AnalyticsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsVC.swift; sourceTree = "<group>"; };
+		A9254DC26A0B46DB8C0755BC /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
+		60FC0D0B5B5D4285B56BA3D7 /* MoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreVC.swift; sourceTree = "<group>"; };
+		8F860C31CFF04BECA201EBDF /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		731F6DFC9A34455EBD9E93A8 /* AccountsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsVC.swift; sourceTree = "<group>"; };
+		E70C800F9E2C4DF4BF203B7B /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
+		331C807D21B84571ABEA8E9C /* BudgetsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetsVC.swift; sourceTree = "<group>"; };
+		70CF7F9ED777433798C6D966 /* BudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetsView.swift; sourceTree = "<group>"; };
+		689189754BA64D608E026311 /* GoalsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsVC.swift; sourceTree = "<group>"; };
+		7471EDE08B1D4D6B8E6A0112 /* GoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsView.swift; sourceTree = "<group>"; };
+		19E337D231BC4059B4526EE5 /* RecurringPaymentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringPaymentsVC.swift; sourceTree = "<group>"; };
+		647CB96F130149A9A24B1B28 /* RecurringPaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringPaymentsView.swift; sourceTree = "<group>"; };
+		4D0E5E1E68A9421DA57D7063 /* DebtsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsVC.swift; sourceTree = "<group>"; };
+		BAB280CFDC4043D6A4E65E70 /* DebtsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsView.swift; sourceTree = "<group>"; };
+		59C51D6FEAE44802BB220DB8 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		9C673C81FCEC44D4A27B4929 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		BC18A21AB77740EEB8B5F84F /* NewOperationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOperationVC.swift; sourceTree = "<group>"; };
+		FEDFD392EA69486FBC419044 /* NewOperationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOperationView.swift; sourceTree = "<group>"; };
+		CAB96C65881DDA6E0DA3A515 /* AppModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModels.swift; sourceTree = "<group>"; };
+		E055BCAB4AD4486C3FF3DC58 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		894484A0311A9571566EAF85 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		AD619A4F34FC0C0AF90ED54D /* PINUnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINUnlockViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				ED1EED2E2FB7C27C002B3BF6 /* Resources */,
+				BAEB51563AB29F0D027550C8 /* Models */,
+				738EA64E33949A9EFB71E1EC /* Data */,
 				ED1EED2D2FB7C279002B3BF6 /* Modules */,
 				ED1EED2C2FB7C274002B3BF6 /* App */,
 				ED1EED1D2FB7C272002B3BF6 /* Info.plist */,
@@ -72,6 +138,8 @@
 		ED1EED2C2FB7C274002B3BF6 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				BE73978990A641868B8DFDC3 /* AppColors.swift */,
+				894484A0311A9571566EAF85 /* Extensions.swift */,
 				ED1EED1B2FB7C272002B3BF6 /* AppDelegate.swift */,
 				ED1EED222FB7C272002B3BF6 /* SceneDelegate.swift */,
 			);
@@ -82,6 +150,15 @@
 			isa = PBXGroup;
 			children = (
 				ED1EED322FB7C471002B3BF6 /* Onboarding */,
+				53E40142711047F6952126F7 /* Auth */,
+				996423D87845487DAC696B6A /* Main */,
+				77DC63C3093E434C9ED2D5C3 /* Accounts */,
+				00CB0A173E7D4B36A5B29085 /* Budgets */,
+				6D240352B6C34E78B62D4902 /* Goals */,
+				21C16D6DAA4E45B096B0978A /* RecurringPayments */,
+				05A2CA67C3A34AC19260868E /* Debts */,
+				2AB2F45CB2524704B0274E0E /* Settings */,
+				E79F3374167E41108B7D16E3 /* NewOperation */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -110,6 +187,266 @@
 				ED1EED362FB7C496002B3BF6 /* OnboardingView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+
+		D4F2F9A043DC452B8068A27A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E11F207AEECE47C2ABFC12D5,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2CD716DCCC824669BCDCFAF7 /* CreatePIN */ = {
+			isa = PBXGroup;
+			children = (
+				D4F2F9A043DC452B8068A27A,
+				95D28B6B8F12490992CC4B69,
+			);
+			path = CreatePIN;
+			sourceTree = "<group>";
+		};
+		7BBA4EEF832E4520B7A17798 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F523C90DAC994E3ABD3F5428,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0D41865A9B0542D3993F2106 /* ConfirmPIN */ = {
+			isa = PBXGroup;
+			children = (
+				7BBA4EEF832E4520B7A17798,
+				399DED9EE1E0446CB6811305,
+			);
+			path = ConfirmPIN;
+			sourceTree = "<group>";
+		};
+		53E40142711047F6952126F7 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				2CD716DCCC824669BCDCFAF7,
+				0D41865A9B0542D3993F2106,
+				AD619A4F34FC0C0AF90ED54D /* PINUnlockViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		40339AE76EA8409BAAEEBFFF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A59FE25D91DF4218AF9FEE0A,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8F41F60D7AB64905971FDC5D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				40339AE76EA8409BAAEEBFFF,
+				98BF9954FAF04894B04C921D,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		B2693C78CDA144EC9C7C56AF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				12A82CAE66AB4E55B5429B3A,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7AFC89A7D5F142B188D9F63E /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				B2693C78CDA144EC9C7C56AF,
+				B5EC30C0853A4D18B872DC2F,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		934A442449024A2BB7CC431A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A9254DC26A0B46DB8C0755BC,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0C0B6751B9AD47DC893D5827 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				934A442449024A2BB7CC431A,
+				CA705D50C67546E4A4A973AC,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		D38A90CEE7184E538C264CEA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8F860C31CFF04BECA201EBDF,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BF414B683A4E44DCAC359672 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				D38A90CEE7184E538C264CEA,
+				60FC0D0B5B5D4285B56BA3D7,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
+		996423D87845487DAC696B6A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				E472C928BA97472DBB8E0756,
+				8F41F60D7AB64905971FDC5D,
+				7AFC89A7D5F142B188D9F63E,
+				0C0B6751B9AD47DC893D5827,
+				BF414B683A4E44DCAC359672,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		B8EB7EA14AFF4AA79D91C453 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E70C800F9E2C4DF4BF203B7B,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		77DC63C3093E434C9ED2D5C3 /* Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				B8EB7EA14AFF4AA79D91C453,
+				731F6DFC9A34455EBD9E93A8,
+			);
+			path = Accounts;
+			sourceTree = "<group>";
+		};
+		4DB460B0D04C41ECB9ECB473 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				70CF7F9ED777433798C6D966,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		00CB0A173E7D4B36A5B29085 /* Budgets */ = {
+			isa = PBXGroup;
+			children = (
+				4DB460B0D04C41ECB9ECB473,
+				331C807D21B84571ABEA8E9C,
+			);
+			path = Budgets;
+			sourceTree = "<group>";
+		};
+		11B8B4DDEA064D06A3FD2B77 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7471EDE08B1D4D6B8E6A0112,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6D240352B6C34E78B62D4902 /* Goals */ = {
+			isa = PBXGroup;
+			children = (
+				11B8B4DDEA064D06A3FD2B77,
+				689189754BA64D608E026311,
+			);
+			path = Goals;
+			sourceTree = "<group>";
+		};
+		A8D7B80CE73A460E91854952 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				647CB96F130149A9A24B1B28,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		21C16D6DAA4E45B096B0978A /* RecurringPayments */ = {
+			isa = PBXGroup;
+			children = (
+				A8D7B80CE73A460E91854952,
+				19E337D231BC4059B4526EE5,
+			);
+			path = RecurringPayments;
+			sourceTree = "<group>";
+		};
+		64E45FF973E14CEDA60A5E16 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BAB280CFDC4043D6A4E65E70,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		05A2CA67C3A34AC19260868E /* Debts */ = {
+			isa = PBXGroup;
+			children = (
+				64E45FF973E14CEDA60A5E16,
+				4D0E5E1E68A9421DA57D7063,
+			);
+			path = Debts;
+			sourceTree = "<group>";
+		};
+		76CFF7150F594B5EA64160C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9C673C81FCEC44D4A27B4929,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2AB2F45CB2524704B0274E0E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				76CFF7150F594B5EA64160C9,
+				59C51D6FEAE44802BB220DB8,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		6F94B29231FD4D269305E8E8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEDFD392EA69486FBC419044,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E79F3374167E41108B7D16E3 /* NewOperation */ = {
+			isa = PBXGroup;
+			children = (
+				6F94B29231FD4D269305E8E8,
+				BC18A21AB77740EEB8B5F84F,
+			);
+			path = NewOperation;
+			sourceTree = "<group>";
+		};
+		BAEB51563AB29F0D027550C8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CAB96C65881DDA6E0DA3A515 /* AppModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		738EA64E33949A9EFB71E1EC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				E055BCAB4AD4486C3FF3DC58 /* DataStore.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +531,39 @@
 				ED1EED262FB7C272002B3BF6 /* SceneDelegate.swift in Sources */,
 				ED1EED342FB7C485002B3BF6 /* OnboardingVC.swift in Sources */,
 				ED1EED272FB7C272002B3BF6 /* ViewController.swift in Sources */,
+				8B9A242F38694384B64F63EB /* AppColors.swift in Sources */,
+				4D782716FE47471895CD3542 /* CreatePINVC.swift in Sources */,
+				321585F536404B38981FF3AA /* CreatePINView.swift in Sources */,
+				0125E727791F4DC98866DA90 /* ConfirmPINVC.swift in Sources */,
+				A2B40D01BFCF4B7C939A7D6B /* ConfirmPINView.swift in Sources */,
+				066CCB269C014A2FAB242646 /* MainTabBarController.swift in Sources */,
+				389BFC5EC4C2422496B5F05F /* HomeVC.swift in Sources */,
+				6AB75BBE349E44E895139341 /* HomeView.swift in Sources */,
+				332DF4ED20E845F4AD89DA64 /* OperationsVC.swift in Sources */,
+				9210EADC49D54437896B7364 /* OperationsView.swift in Sources */,
+				7E2C1E1BC553430BBDE23E71 /* AnalyticsVC.swift in Sources */,
+				72FCA487E84C483398A4BF4E /* AnalyticsView.swift in Sources */,
+				7CA5A0542F8441B786CA5130 /* MoreVC.swift in Sources */,
+				16108CE3CAFD4F63BDB01890 /* MoreView.swift in Sources */,
+				7BAEAF2B34A2491EBA759193 /* AccountsVC.swift in Sources */,
+				53373D3AAC3C4F48B9640D2C /* AccountsView.swift in Sources */,
+				6763B04CEF08475BA5F7B5E0 /* BudgetsVC.swift in Sources */,
+				22B242EBEF6B4242B89F8EFD /* BudgetsView.swift in Sources */,
+				F1F6EF9610CD4FACACA0C472 /* GoalsVC.swift in Sources */,
+				C168FFFE71C6470BB1E4B341 /* GoalsView.swift in Sources */,
+				3DE9BE671CCA4035985A1162 /* RecurringPaymentsVC.swift in Sources */,
+				3F3B7AD7E1084DC9A28A9015 /* RecurringPaymentsView.swift in Sources */,
+				62BD0CBAFD854C30B2B26A38 /* DebtsVC.swift in Sources */,
+				9D1A2FABA3964191956E9C90 /* DebtsView.swift in Sources */,
+				109B2CB0307E405DAFF39D22 /* SettingsVC.swift in Sources */,
+				6C4BAE70F3E44E13A66266F8 /* SettingsView.swift in Sources */,
+				D36BD08C899647A6B29BDE82 /* NewOperationVC.swift in Sources */,
+				69B2CA2032DA403FB1FED3F2 /* NewOperationView.swift in Sources */,
+				58D6DBB2519D72D3FFD9B8C2 /* AppModels.swift in Sources */,
+				FBC293D86CBF9BD0976A51A0 /* DataStore.swift in Sources */,
+				578EBB4901166D8C907BBE25 /* Extensions.swift in Sources */,
+				A35F33F492A245797B73F4CC /* PINUnlockViewController.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

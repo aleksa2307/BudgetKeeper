@@ -7,7 +7,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: scene)
-        window.rootViewController = ViewController()
+        let root: UIViewController
+        if DataStore.shared.isPINSet {
+            root = PINUnlockViewController()
+        } else {
+            root = OnboardingViewController()
+        }
+        window.rootViewController = root
         window.makeKeyAndVisible()
         self.window = window
     }
