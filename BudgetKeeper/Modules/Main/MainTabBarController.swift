@@ -138,7 +138,7 @@ final class CustomTabBarView: UIView {
     }
 
     private func setupUI() {
-        backgroundColor = .white
+        backgroundColor = AppColors.card
         topBorder.backgroundColor = AppColors.separator
         addSubview(topBorder)
 

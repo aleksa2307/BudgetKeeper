@@ -6,6 +6,9 @@ final class ConfirmPINViewController: UIViewController {
     private let originalPIN: String
     private var enteredDigits: [String] = []
 
+    // Passed from CreatePINVC; nil during initial setup
+    var onSuccess: (() -> Void)?
+
     init(pin: String) {
         self.originalPIN = pin
         super.init(nibName: nil, bundle: nil)
@@ -17,8 +20,13 @@ final class ConfirmPINViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        confirmView.keypadView.onDigit = { [weak self] digit in self?.appendDigit(digit) }
+        confirmView.keypadView.onDigit  = { [weak self] digit in self?.appendDigit(digit) }
         confirmView.keypadView.onDelete = { [weak self] in self?.deleteDigit() }
+
+        if onSuccess != nil {
+            confirmView.backButton.isHidden = false
+            confirmView.backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        }
     }
 }
 
@@ -43,12 +51,22 @@ private extension ConfirmPINViewController {
     func validatePIN() {
         if enteredDigits.joined() == originalPIN {
             DataStore.shared.pin = originalPIN
-            let tabBar = MainTabBarController()
-            tabBar.modalPresentationStyle = .fullScreen
-            present(tabBar, animated: true)
+            if let onSuccess = onSuccess {
+                // Change-PIN flow: dismiss the whole modal back to Settings
+                onSuccess()
+            } else {
+                // Initial setup flow: go to main app
+                let tabBar = MainTabBarController()
+                tabBar.modalPresentationStyle = .fullScreen
+                present(tabBar, animated: true)
+            }
         } else {
             enteredDigits = []
             confirmView.shakeAndReset()
         }
+    }
+
+    @objc func backTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }

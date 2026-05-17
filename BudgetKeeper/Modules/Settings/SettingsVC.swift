@@ -31,6 +31,14 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
             row = SettingsView.Row(title: row.title, value: DataStore.shared.userName,
                                    icon: row.icon, color: row.color, accessory: row.accessory)
         }
+        // Override theme value dynamically
+        if indexPath.section == 2 && indexPath.row == 0 {
+            let names = ["Системна", "Світла", "Темна"]
+            let idx  = DataStore.shared.themeStyle
+            let name = idx >= 0 && idx < names.count ? names[idx] : "Системна"
+            row = SettingsView.Row(title: row.title, value: name,
+                                   icon: row.icon, color: row.color, accessory: row.accessory)
+        }
         cell.configure(with: row)
 
         // Face ID toggle state
@@ -80,14 +88,13 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 8 }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = settingsView.sections[indexPath.section].rows[indexPath.row]
         switch (indexPath.section, indexPath.row) {
         case (0, 0): editName()
         case (1, 0): changePIN()
-        case (4, 4): clearAllData()
+        case (2, 0): pickTheme()
+        case (3, 4): clearAllData()
         default: break
         }
-        _ = row
     }
 }
 
@@ -112,9 +119,33 @@ private extension SettingsViewController {
         present(alert, animated: true)
     }
 
+    func pickTheme() {
+        let sheet = UIAlertController(title: "Тема", message: nil, preferredStyle: .actionSheet)
+        let options: [(String, Int)] = [("Системна", 0), ("Світла", 1), ("Темна", 2)]
+        for (name, raw) in options {
+            let action = UIAlertAction(title: name, style: .default) { [weak self] _ in
+                DataStore.shared.themeStyle = raw
+                let style = UIUserInterfaceStyle(rawValue: raw) ?? .unspecified
+                UIApplication.shared.connectedScenes
+                    .compactMap { $0 as? UIWindowScene }
+                    .flatMap { $0.windows }
+                    .forEach { $0.overrideUserInterfaceStyle = style }
+                self?.settingsView.tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
+            }
+            if DataStore.shared.themeStyle == raw {
+                action.setValue(true, forKey: "checked")
+            }
+            sheet.addAction(action)
+        }
+        sheet.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
+        present(sheet, animated: true)
+    }
+
     func changePIN() {
-        let vc  = CreatePINViewController()
+        let vc = CreatePINViewController()
+        vc.onSuccess = { [weak self] in self?.dismiss(animated: true) }
         let nav = UINavigationController(rootViewController: vc)
+        nav.navigationBar.isHidden = true
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)
     }

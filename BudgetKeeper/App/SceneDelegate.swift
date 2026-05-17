@@ -14,6 +14,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             root = OnboardingViewController()
         }
         window.rootViewController = root
+        window.overrideUserInterfaceStyle = UIUserInterfaceStyle(rawValue: DataStore.shared.themeStyle) ?? .unspecified
         window.makeKeyAndVisible()
         self.window = window
     }

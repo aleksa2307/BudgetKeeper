@@ -5,12 +5,20 @@ final class CreatePINViewController: UIViewController {
     private var createPINView: CreatePINView { view as! CreatePINView }
     private var enteredDigits: [String] = []
 
+    // Set by SettingsVC when changing PIN; nil during initial setup
+    var onSuccess: (() -> Void)?
+
     override func loadView() { view = CreatePINView() }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        createPINView.keypadView.onDigit = { [weak self] digit in self?.appendDigit(digit) }
+        createPINView.keypadView.onDigit  = { [weak self] digit in self?.appendDigit(digit) }
         createPINView.keypadView.onDelete = { [weak self] in self?.deleteDigit() }
+
+        if onSuccess != nil {
+            createPINView.closeButton.isHidden = false
+            createPINView.closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
+        }
     }
 }
 
@@ -34,7 +42,19 @@ private extension CreatePINViewController {
 
     func proceedToConfirm() {
         let vc = ConfirmPINViewController(pin: enteredDigits.joined())
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        vc.onSuccess = onSuccess
+
+        if let nav = navigationController {
+            // Change-PIN flow: push for free back navigation
+            nav.pushViewController(vc, animated: true)
+        } else {
+            // Initial setup flow: present fullscreen as before
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+    }
+
+    @objc func closeTapped() {
+        dismiss(animated: true)
     }
 }

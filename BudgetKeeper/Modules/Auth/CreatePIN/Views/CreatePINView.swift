@@ -3,6 +3,7 @@ import SnapKit
 
 final class CreatePINView: UIView {
 
+    let closeButton = UIButton(type: .system)
     let titleLabel = UILabel()
     let dotsStackView = UIStackView()
     var dotViews: [UIView] = []
@@ -30,6 +31,11 @@ private extension CreatePINView {
     func setupUI() {
         backgroundColor = .white
 
+        let cfg = UIImage.SymbolConfiguration(pointSize: 17, weight: .medium)
+        closeButton.setImage(UIImage(systemName: "xmark", withConfiguration: cfg), for: .normal)
+        closeButton.tintColor = AppColors.textSecondary
+        closeButton.isHidden = true
+
         titleLabel.text = "Створіть PIN-код"
         titleLabel.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         titleLabel.textColor = AppColors.textPrimary
@@ -53,8 +59,13 @@ private extension CreatePINView {
     }
 
     func setupConstraints() {
-        [titleLabel, dotsStackView, keypadView].forEach { addSubview($0) }
+        [closeButton, titleLabel, dotsStackView, keypadView].forEach { addSubview($0) }
 
+        closeButton.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(16)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.size.equalTo(44)
+        }
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).offset(60)
             $0.leading.trailing.equalToSuperview().inset(24)

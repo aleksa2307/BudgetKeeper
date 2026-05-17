@@ -3,6 +3,7 @@ import SnapKit
 
 final class ConfirmPINView: UIView {
 
+    let backButton = UIButton(type: .system)
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let dotsStackView = UIStackView()
@@ -41,6 +42,11 @@ private extension ConfirmPINView {
     func setupUI() {
         backgroundColor = .white
 
+        let cfg = UIImage.SymbolConfiguration(pointSize: 17, weight: .medium)
+        backButton.setImage(UIImage(systemName: "chevron.left", withConfiguration: cfg), for: .normal)
+        backButton.tintColor = AppColors.textPrimary
+        backButton.isHidden = true
+
         titleLabel.text = "Підтвердьте PIN-код"
         titleLabel.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         titleLabel.textColor = AppColors.textPrimary
@@ -69,8 +75,13 @@ private extension ConfirmPINView {
     }
 
     func setupConstraints() {
-        [titleLabel, subtitleLabel, dotsStackView, keypadView].forEach { addSubview($0) }
+        [backButton, titleLabel, subtitleLabel, dotsStackView, keypadView].forEach { addSubview($0) }
 
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(16)
+            $0.leading.equalToSuperview().offset(12)
+            $0.size.equalTo(44)
+        }
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).offset(60)
             $0.leading.trailing.equalToSuperview().inset(24)

@@ -29,6 +29,12 @@ final class DataStore {
         set { defaults.set(newValue, forKey: "faceIDEnabled") }
     }
 
+    // 0 = system, 1 = light, 2 = dark  (matches UIUserInterfaceStyle raw values)
+    var themeStyle: Int {
+        get { defaults.integer(forKey: "themeStyle") }
+        set { defaults.set(newValue, forKey: "themeStyle") }
+    }
+
     // MARK: - Transactions
 
     var transactions: [Transaction] {
