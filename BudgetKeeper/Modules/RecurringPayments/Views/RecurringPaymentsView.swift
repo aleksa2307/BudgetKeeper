@@ -96,7 +96,6 @@ final class RecurringPaymentCell: UITableViewCell {
         amountLabel.textColor = AppColors.textPrimary
         amountLabel.setContentHuggingPriority(.required, for: .horizontal)
         statusLabel.font = UIFont.systemFont(ofSize: 11, weight: .medium)
-        statusLabel.textColor = AppColors.green
         statusLabel.textAlignment = .right
 
         [iconContainer, nameLabel, dateLabel, amountLabel, statusLabel].forEach { contentView.addSubview($0) }
@@ -116,11 +115,12 @@ final class RecurringPaymentCell: UITableViewCell {
 
     required init?(coder: NSCoder) { fatalError() }
 
-    func configure(name: String, date: String, amount: String, status: String, color: UIColor, icon: String) {
+    func configure(name: String, date: String, amount: String, status: String, statusColor: UIColor, color: UIColor, icon: String) {
         nameLabel.text = name
         dateLabel.text = date
         amountLabel.text = amount
         statusLabel.text = status
+        statusLabel.textColor = statusColor
         iconContainer.backgroundColor = color
         let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
         iconImg.image = UIImage(systemName: icon, withConfiguration: config)

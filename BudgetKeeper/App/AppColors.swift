@@ -1,7 +1,6 @@
 import UIKit
 
 enum AppColors {
-    // Accent colors — same in both modes
     static let primary   = UIColor(red: 0/255,   green: 102/255, blue: 255/255, alpha: 1)
     static let green     = UIColor(red: 52/255,  green: 199/255, blue: 89/255,  alpha: 1)
     static let red       = UIColor(red: 255/255, green: 59/255,  blue: 48/255,  alpha: 1)
@@ -10,7 +9,6 @@ enum AppColors {
     static let lightBlue = UIColor(red: 90/255,  green: 200/255, blue: 250/255, alpha: 1)
     static let systemGray = UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1)
 
-    // Adaptive colors
     static let background = UIColor { t in
         t.userInterfaceStyle == .dark
             ? UIColor(red: 28/255,  green: 28/255,  blue: 30/255,  alpha: 1)

@@ -39,6 +39,10 @@
 		3F3B7AD7E1084DC9A28A9015 /* RecurringPaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647CB96F130149A9A24B1B28 /* RecurringPaymentsView.swift */; };
 		62BD0CBAFD854C30B2B26A38 /* DebtsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0E5E1E68A9421DA57D7063 /* DebtsVC.swift */; };
 		9D1A2FABA3964191956E9C90 /* DebtsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB280CFDC4043D6A4E65E70 /* DebtsView.swift */; };
+		CA7E601C35B14C20A1B2C3D6 /* CategoriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7E601A35B14C20A1B2C3D4 /* CategoriesVC.swift */; };
+		CA7E601D35B14C20A1B2C3D7 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7E601B35B14C20A1B2C3D5 /* CategoriesView.swift */; };
+		CA7E602135B14C20A1B2C3DB /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7E602035B14C20A1B2C3DA /* CoreDataStack.swift */; };
+		CA7E602435B14C20A1B2C3DE /* BudgetKeeper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA7E602235B14C20A1B2C3DC /* BudgetKeeper.xcdatamodeld */; };
 		109B2CB0307E405DAFF39D22 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C51D6FEAE44802BB220DB8 /* SettingsVC.swift */; };
 		6C4BAE70F3E44E13A66266F8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C673C81FCEC44D4A27B4929 /* SettingsView.swift */; };
 		D36BD08C899647A6B29BDE82 /* NewOperationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18A21AB77740EEB8B5F84F /* NewOperationVC.swift */; };
@@ -83,6 +87,10 @@
 		647CB96F130149A9A24B1B28 /* RecurringPaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringPaymentsView.swift; sourceTree = "<group>"; };
 		4D0E5E1E68A9421DA57D7063 /* DebtsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsVC.swift; sourceTree = "<group>"; };
 		BAB280CFDC4043D6A4E65E70 /* DebtsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsView.swift; sourceTree = "<group>"; };
+		CA7E601A35B14C20A1B2C3D4 /* CategoriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVC.swift; sourceTree = "<group>"; };
+		CA7E601B35B14C20A1B2C3D5 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
+		CA7E602035B14C20A1B2C3DA /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		CA7E602335B14C20A1B2C3DD /* BudgetKeeper.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BudgetKeeper.xcdatamodel; sourceTree = "<group>"; };
 		59C51D6FEAE44802BB220DB8 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		9C673C81FCEC44D4A27B4929 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BC18A21AB77740EEB8B5F84F /* NewOperationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOperationVC.swift; sourceTree = "<group>"; };
@@ -157,6 +165,7 @@
 				6D240352B6C34E78B62D4902 /* Goals */,
 				21C16D6DAA4E45B096B0978A /* RecurringPayments */,
 				05A2CA67C3A34AC19260868E /* Debts */,
+				CA7E601E35B14C20A1B2C3D8 /* Categories */,
 				2AB2F45CB2524704B0274E0E /* Settings */,
 				E79F3374167E41108B7D16E3 /* NewOperation */,
 			);
@@ -399,6 +408,23 @@
 			path = Debts;
 			sourceTree = "<group>";
 		};
+		CA7E601F35B14C20A1B2C3D9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CA7E601B35B14C20A1B2C3D5 /* CategoriesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CA7E601E35B14C20A1B2C3D8 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				CA7E601F35B14C20A1B2C3D9 /* Views */,
+				CA7E601A35B14C20A1B2C3D4 /* CategoriesVC.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		76CFF7150F594B5EA64160C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -445,6 +471,8 @@
 			isa = PBXGroup;
 			children = (
 				E055BCAB4AD4486C3FF3DC58 /* DataStore.swift */,
+				CA7E602035B14C20A1B2C3DA /* CoreDataStack.swift */,
+				CA7E602235B14C20A1B2C3DC /* BudgetKeeper.xcdatamodeld */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -555,6 +583,10 @@
 				3F3B7AD7E1084DC9A28A9015 /* RecurringPaymentsView.swift in Sources */,
 				62BD0CBAFD854C30B2B26A38 /* DebtsVC.swift in Sources */,
 				9D1A2FABA3964191956E9C90 /* DebtsView.swift in Sources */,
+				CA7E601C35B14C20A1B2C3D6 /* CategoriesVC.swift in Sources */,
+				CA7E601D35B14C20A1B2C3D7 /* CategoriesView.swift in Sources */,
+				CA7E602135B14C20A1B2C3DB /* CoreDataStack.swift in Sources */,
+				CA7E602435B14C20A1B2C3DE /* BudgetKeeper.xcdatamodeld in Sources */,
 				109B2CB0307E405DAFF39D22 /* SettingsVC.swift in Sources */,
 				6C4BAE70F3E44E13A66266F8 /* SettingsView.swift in Sources */,
 				D36BD08C899647A6B29BDE82 /* NewOperationVC.swift in Sources */,
@@ -817,6 +849,19 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		CA7E602235B14C20A1B2C3DC /* BudgetKeeper.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CA7E602335B14C20A1B2C3DD /* BudgetKeeper.xcdatamodel */,
+			);
+			currentVersion = CA7E602335B14C20A1B2C3DD /* BudgetKeeper.xcdatamodel */;
+			path = BudgetKeeper.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = ED1EECFB2FB7C0E3002B3BF6 /* Project object */;
 }

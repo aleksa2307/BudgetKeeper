@@ -5,7 +5,6 @@ final class CreatePINViewController: UIViewController {
     private var createPINView: CreatePINView { view as! CreatePINView }
     private var enteredDigits: [String] = []
 
-    // Set by SettingsVC when changing PIN; nil during initial setup
     var onSuccess: (() -> Void)?
 
     override func loadView() { view = CreatePINView() }
@@ -45,10 +44,8 @@ private extension CreatePINViewController {
         vc.onSuccess = onSuccess
 
         if let nav = navigationController {
-            // Change-PIN flow: push for free back navigation
             nav.pushViewController(vc, animated: true)
         } else {
-            // Initial setup flow: present fullscreen as before
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

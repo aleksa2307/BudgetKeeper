@@ -22,15 +22,11 @@ final class MainTabBarController: UITabBarController {
     }
 }
 
-// MARK: - UITabBarControllerDelegate
-
 extension MainTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         customTabBar.setSelectedIndex(selectedIndex, animated: true)
     }
 }
-
-// MARK: - Private setup
 
 private extension MainTabBarController {
 
@@ -41,7 +37,6 @@ private extension MainTabBarController {
         let more     = wrap(MoreViewController())
 
         let navs = [home, ops, analytics, more]
-        // Add 49pt bottom inset so content stays above our custom tab bar
         navs.forEach { $0.additionalSafeAreaInsets.bottom = 49 }
         viewControllers = navs
     }
@@ -88,7 +83,6 @@ private extension MainTabBarController {
             height: barH
         )
 
-        // FAB: centered horizontally, top edge 17pt above the tab bar top
         let fabSize: CGFloat = 56
         fabButton.frame = CGRect(
             x: (view.bounds.width - fabSize) / 2,
@@ -110,8 +104,6 @@ private extension MainTabBarController {
     }
 }
 
-// MARK: - CustomTabBarView
-
 final class CustomTabBarView: UIView {
 
     var onTabTapped: ((Int) -> Void)?
@@ -119,7 +111,6 @@ final class CustomTabBarView: UIView {
     private let topBorder = UIView()
     private var itemViews: [TabBarItemView] = []
 
-    // Figma: 4 items split as [Головна, Операції] [gap=FAB] [Аналітика, Ще]
     private let items: [(icon: String, activeIcon: String, title: String)] = [
         ("house",      "house.fill",      "Головна"),
         ("list.bullet", "list.bullet",    "Операції"),
@@ -155,10 +146,6 @@ final class CustomTabBarView: UIView {
         super.layoutSubviews()
         topBorder.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 0.5)
 
-        // Figma: screen 393pt wide
-        // Left group:  x=0        width=160.5  (two buttons × 80.25)
-        // FAB gap:     x=160.5    width=72      (center of 393 = 196.5, FAB left=168.5 size=56)
-        // Right group: x=232.5    width=160.5  (two buttons × 80.25)
         let w = bounds.width
         let scale = w / 393.0
         let btnW  = 80.25 * scale
@@ -175,8 +162,6 @@ final class CustomTabBarView: UIView {
         onTabTapped?(sender.tag)
     }
 }
-
-// MARK: - TabBarItemView
 
 final class TabBarItemView: UIControl {
 
@@ -213,7 +198,6 @@ final class TabBarItemView: UIControl {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        // Figma: pt-[8px] top padding, icon 24×24, gap 4px, label 15px height
         let w: CGFloat = bounds.width
         let iconSize: CGFloat  = 24
         let labelH:   CGFloat  = 15

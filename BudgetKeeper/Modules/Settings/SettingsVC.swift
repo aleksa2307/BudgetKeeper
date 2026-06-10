@@ -26,12 +26,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.id, for: indexPath) as! SettingsCell
         var row  = settingsView.sections[indexPath.section].rows[indexPath.row]
 
-        // Override name value dynamically
         if indexPath.section == 0 && indexPath.row == 0 {
             row = SettingsView.Row(title: row.title, value: DataStore.shared.userName,
                                    icon: row.icon, color: row.color, accessory: row.accessory)
         }
-        // Override theme value dynamically
         if indexPath.section == 2 && indexPath.row == 0 {
             let names = ["Системна", "Світла", "Темна"]
             let idx  = DataStore.shared.themeStyle
@@ -41,13 +39,11 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         }
         cell.configure(with: row)
 
-        // Face ID toggle state
         if indexPath.section == 1 && indexPath.row == 1 {
             cell.toggle.isOn = DataStore.shared.isFaceIDEnabled
             cell.toggle.addTarget(self, action: #selector(faceIDToggled(_:)), for: .valueChanged)
         }
 
-        // Corner radius for first/last in section
         let section  = settingsView.sections[indexPath.section]
         let isFirst  = indexPath.row == 0
         let isLast   = indexPath.row == section.rows.count - 1
@@ -88,11 +84,16 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 8 }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch (indexPath.section, indexPath.row) {
-        case (0, 0): editName()
-        case (1, 0): changePIN()
-        case (2, 0): pickTheme()
-        case (3, 4): clearAllData()
+        let row = settingsView.sections[indexPath.section].rows[indexPath.row]
+        switch row.title {
+        case "Ім'я": editName()
+        case "PIN-код": changePIN()
+        case "Тема": pickTheme()
+        case "Категорії": navigationController?.pushViewController(CategoriesViewController(), animated: true)
+        case "Експорт у CSV": exportCSV()
+        case "Експорт у PDF": exportPDF()
+        case "Очистити всі дані": clearAllData()
+        case "Політика конфіденційності": openPrivacyPolicy()
         default: break
         }
     }
@@ -154,11 +155,14 @@ private extension SettingsViewController {
         let confirm = UIAlertController(title: "Очистити всі дані?",
                                         message: "Всі транзакції, рахунки та налаштування будуть видалені. Цю дію не можна скасувати.",
                                         preferredStyle: .alert)
-        confirm.addAction(UIAlertAction(title: "Очистити", style: .destructive) { _ in
-            let domain = Bundle.main.bundleIdentifier ?? ""
-            UserDefaults.standard.removePersistentDomain(forName: domain)
-            UserDefaults.standard.synchronize()
-            // Restart to onboarding
+        confirm.addAction(UIAlertAction(title: "Очистити", style: .destructive) { [weak self] _ in
+            guard DataStore.shared.wipeAllData() else {
+                let fail = UIAlertController(title: "Не вдалося очистити дані",
+                                             message: "Спробуйте ще раз.", preferredStyle: .alert)
+                fail.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.present(fail, animated: true)
+                return
+            }
             let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             let window = scene?.windows.first
             UIView.transition(with: window!, duration: 0.4, options: .transitionFlipFromLeft) {
@@ -167,5 +171,104 @@ private extension SettingsViewController {
         })
         confirm.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
         present(confirm, animated: true)
+    }
+
+    func exportCSV() {
+        let transactions = DataStore.shared.transactions
+        guard !transactions.isEmpty else { showNoDataAlert(); return }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+
+        func escaped(_ field: String) -> String {
+            guard field.contains(";") || field.contains("\"") || field.contains("\n") else { return field }
+            return "\"" + field.replacingOccurrences(of: "\"", with: "\"\"") + "\""
+        }
+
+        var csv = "\u{FEFF}"
+        csv += "Дата;Тип;Категорія;Рахунок;Сума;Нотатка\n"
+        for t in transactions {
+            let date     = formatter.string(from: t.date)
+            let category = escaped(DataStore.shared.category(for: t.categoryId)?.name ?? "Інше")
+            let account  = escaped(DataStore.shared.account(for: t.accountId)?.name ?? "—")
+            let amount   = String(format: "%.2f", t.amount)
+            let note     = escaped(t.note)
+            csv += "\(date);\(t.type.displayName);\(category);\(account);\(amount);\(note)\n"
+        }
+
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("BudgetKeeper.csv")
+        do {
+            try csv.write(to: url, atomically: true, encoding: .utf8)
+        } catch { return }
+        present(UIActivityViewController(activityItems: [url], applicationActivities: nil), animated: true)
+    }
+
+    func exportPDF() {
+        let store = DataStore.shared
+        guard !store.transactions.isEmpty else { showNoDataAlert(); return }
+
+        let pageWidth: CGFloat  = 595.2
+        let pageHeight: CGFloat = 841.8
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight))
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "uk_UA")
+        dateFormatter.dateStyle = .long
+
+        let lineFormatter = DateFormatter()
+        lineFormatter.dateFormat = "dd.MM.yyyy"
+
+        let titleAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 24), .foregroundColor: UIColor.black]
+        let textAttrs:  [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 13),     .foregroundColor: UIColor.black]
+
+        let data = renderer.pdfData { context in
+            context.beginPage()
+            var y: CGFloat = 40
+
+            "BudgetKeeper — Фінансовий звіт".draw(at: CGPoint(x: 40, y: y), withAttributes: titleAttrs)
+            y += 36
+            dateFormatter.string(from: Date()).draw(at: CGPoint(x: 40, y: y), withAttributes: textAttrs)
+            y += 30
+
+            let summary = [
+                "Загальний баланс: \(store.totalBalance.hryvnia)",
+                "Доходи за місяць: \(store.monthlyIncome.hryvnia)",
+                "Витрати за місяць: \(store.monthlyExpense.hryvnia)",
+            ]
+            for line in summary {
+                line.draw(at: CGPoint(x: 40, y: y), withAttributes: textAttrs)
+                y += 20
+            }
+            y += 16
+
+            for t in store.transactions {
+                if y > pageHeight - 60 {
+                    context.beginPage()
+                    y = 40
+                }
+                let category = store.category(for: t.categoryId)?.name ?? "Інше"
+                let sign = t.type == .income ? "+" : "-"
+                let line = "\(lineFormatter.string(from: t.date))  \(category)  \(sign)\(t.amount.hryvnia)"
+                line.draw(at: CGPoint(x: 40, y: y), withAttributes: textAttrs)
+                y += 18
+            }
+        }
+
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("BudgetKeeper.pdf")
+        do {
+            try data.write(to: url)
+        } catch { return }
+        present(UIActivityViewController(activityItems: [url], applicationActivities: nil), animated: true)
+    }
+
+    func openPrivacyPolicy() {
+        guard let url = URL(string: "https://www.example.com") else { return }
+        UIApplication.shared.open(url)
+    }
+
+    func showNoDataAlert() {
+        let alert = UIAlertController(title: "Немає операцій для експорту", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }

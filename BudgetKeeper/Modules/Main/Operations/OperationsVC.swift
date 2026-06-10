@@ -36,7 +36,6 @@ private extension OperationsViewController {
         switch opsView.selectedFilter {
         case 1: filtered = all.filter { $0.type == .income }
         case 2: filtered = all.filter { $0.type == .expense }
-        case 3: filtered = all.filter { $0.type == .transfer }
         default: filtered = all
         }
 
@@ -87,6 +86,27 @@ extension OperationsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { 32 }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 0 }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let t = sections[indexPath.section].transactions[indexPath.row]
+        guard t.type != .transfer else {
+            let alert = UIAlertController(title: nil,
+                                          message: "Старі операції-перекази не можна редагувати, лише видалити",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
+        }
+        let vc = NewOperationViewController()
+        vc.transactionToEdit = t
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .pageSheet
+        if let sheet = nav.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        present(nav, animated: true)
+    }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Видалити") { [weak self] _, _, done in

@@ -38,8 +38,6 @@ private extension AnalyticsViewController {
         let cal   = Calendar.current
         let now   = Date()
 
-        // ---- 1. Donut + Top expenses: filter by selected period ----
-
         let periodExpenses = store.transactions.filter { t in
             guard t.type == .expense else { return false }
             switch period {
@@ -49,7 +47,6 @@ private extension AnalyticsViewController {
             }
         }
 
-        // Donut: group by category
         var catTotals: [UUID: Double] = [:]
         for t in periodExpenses { catTotals[t.categoryId, default: 0] += t.amount }
 
@@ -64,7 +61,6 @@ private extension AnalyticsViewController {
             }
         analyticsView.donutCard.update(segments: donutSegments)
 
-        // Top 5 individual expense transactions
         let topItems: [(title: String, amount: Double, color: UIColor)] = periodExpenses
             .sorted { $0.amount > $1.amount }
             .prefix(5)
@@ -75,8 +71,6 @@ private extension AnalyticsViewController {
                 return (name, t.amount, color)
             }
         analyticsView.refreshTopExpenses(topItems)
-
-        // ---- 2. Bar chart: last 6 months income/expense ----
 
         let monthFmt = DateFormatter()
         monthFmt.locale = Locale(identifier: "uk_UA")
@@ -109,9 +103,6 @@ private extension AnalyticsViewController {
         }
         analyticsView.barCard.update(data: barData)
 
-        // ---- 3. Area chart: balance at end of each of the last 6 months ----
-        // Reconstruct past balance by adjusting current balance for transactions after each month-end.
-
         let currentBalance = store.totalBalance
         var areaData: [AreaChartView.PointData] = []
 
@@ -120,12 +111,10 @@ private extension AnalyticsViewController {
             let y = cal.component(.year,  from: date)
             let m = cal.component(.month, from: date)
 
-            // Find the first moment of the NEXT month as cutoff
             guard let monthStart = cal.date(from: DateComponents(year: y, month: m, day: 1)),
                   let nextMonthStart = cal.date(byAdding: .month, value: 1, to: monthStart)
             else { continue }
 
-            // Sum transactions that happened AFTER this month-end
             let txAfter = store.transactions.filter { $0.date >= nextMonthStart }
             let adjustment = txAfter.reduce(0.0) { acc, t in
                 switch t.type {

@@ -7,7 +7,6 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeView.notificationButton.addTarget(self, action: #selector(notificationTapped), for: .touchUpInside)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: DataStore.dataChangedNotification, object: nil)
     }
 
@@ -18,8 +17,6 @@ final class HomeViewController: UIViewController {
 }
 
 private extension HomeViewController {
-    @objc func notificationTapped() {}
-
     @objc func reloadData() {
         let store = DataStore.shared
         homeView.configure(

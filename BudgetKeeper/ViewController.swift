@@ -1,9 +1,3 @@
-//
-//  ViewController.swift
-//  BudgetKeeper
-//
-//  Created by Kyrylo Andreichenko on 16.05.2026.
-//
 
 import UIKit
 
@@ -13,7 +7,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .red
     }
-
 
 }
 

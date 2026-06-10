@@ -6,24 +6,19 @@ final class HomeView: UIView {
     let scrollView = UIScrollView()
     let contentView = UIView()
 
-    // Header
     let greetingLabel   = UILabel()
     let dateLabel       = UILabel()
-    let notificationButton = UIButton(type: .system)
 
-    // Balance card
     let balanceCard         = UIView()
     let balanceTitleLabel   = UILabel()
     let balanceAmountLabel  = UILabel()
     let incomeChip  = SummaryChipView(title: "Доходи",  amount: "₴0,00", color: AppColors.green)
     let expenseChip = SummaryChipView(title: "Витрати", amount: "₴0,00", color: AppColors.red)
 
-    // Budgets section
     let budgetsSectionTitle = UILabel()
     let budgetsScrollView   = UIScrollView()
     let budgetsStackView    = UIStackView()
 
-    // Transactions section
     let transactionsSectionTitle = UILabel()
     let transactionsContainer    = UIView()
     private let transactionsStack = UIStackView()
@@ -36,8 +31,6 @@ final class HomeView: UIView {
     }
 
     required init?(coder: NSCoder) { fatalError() }
-
-    // MARK: - Public refresh methods
 
     func configure(userName: String, balance: Double, income: Double, expense: Double) {
         greetingLabel.text     = "Привіт, \(userName)! 👋"
@@ -90,11 +83,6 @@ private extension HomeView {
         dateLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         dateLabel.textColor = AppColors.textSecondary
 
-        let notifConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
-        notificationButton.setImage(UIImage(systemName: "bell", withConfiguration: notifConfig), for: .normal)
-        notificationButton.tintColor = AppColors.textPrimary
-
-        // Balance card
         balanceCard.backgroundColor = AppColors.primary
         balanceCard.layer.cornerRadius = 24
 
@@ -106,7 +94,6 @@ private extension HomeView {
         balanceAmountLabel.font = UIFont.systemFont(ofSize: 36, weight: .bold)
         balanceAmountLabel.textColor = .white
 
-        // Budgets
         budgetsSectionTitle.text = "Бюджети"
         budgetsSectionTitle.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         budgetsSectionTitle.textColor = AppColors.textPrimary
@@ -115,7 +102,6 @@ private extension HomeView {
         budgetsStackView.axis = .horizontal
         budgetsStackView.spacing = 12
 
-        // Transactions
         transactionsSectionTitle.text = "Останні операції"
         transactionsSectionTitle.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         transactionsSectionTitle.textColor = AppColors.textPrimary
@@ -139,7 +125,7 @@ private extension HomeView {
         scrollView.snp.makeConstraints { $0.edges.equalTo(safeAreaLayoutGuide) }
         contentView.snp.makeConstraints { $0.edges.equalToSuperview(); $0.width.equalToSuperview() }
 
-        [greetingLabel, dateLabel, notificationButton, balanceCard,
+        [greetingLabel, dateLabel, balanceCard,
          budgetsSectionTitle, budgetsScrollView,
          transactionsSectionTitle, transactionsContainer].forEach { contentView.addSubview($0) }
 
@@ -148,16 +134,11 @@ private extension HomeView {
         greetingLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalTo(notificationButton.snp.leading).offset(-8)
+            $0.trailing.equalToSuperview().offset(-16)
         }
         dateLabel.snp.makeConstraints {
             $0.top.equalTo(greetingLabel.snp.bottom).offset(2)
             $0.leading.equalToSuperview().offset(16)
-        }
-        notificationButton.snp.makeConstraints {
-            $0.centerY.equalTo(greetingLabel)
-            $0.trailing.equalToSuperview().offset(-16)
-            $0.size.equalTo(44)
         }
         balanceCard.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(16)
@@ -220,8 +201,6 @@ private extension HomeView {
     }
 }
 
-// MARK: - SummaryChipView
-
 final class SummaryChipView: UIView {
     private let amountLabel = UILabel()
     private let titleLabel  = UILabel()
@@ -250,8 +229,6 @@ final class SummaryChipView: UIView {
 
     func update(amount: String) { amountLabel.text = amount }
 }
-
-// MARK: - BudgetCardView
 
 final class BudgetCardView: UIView {
     init(title: String, progress: CGFloat, color: UIColor) {
@@ -306,8 +283,6 @@ final class BudgetCardView: UIView {
     }
     required init?(coder: NSCoder) { fatalError() }
 }
-
-// MARK: - TransactionRowView
 
 final class TransactionRowView: UIView {
     init(title: String, subtitle: String, amount: String, amountColor: UIColor) {

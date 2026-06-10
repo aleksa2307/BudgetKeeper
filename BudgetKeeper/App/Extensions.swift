@@ -1,7 +1,5 @@
 import UIKit
 
-// MARK: - UIColor hex
-
 extension UIColor {
     convenience init?(hex: String) {
         var s = hex.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -22,8 +20,6 @@ extension UIColor {
     }
 }
 
-// MARK: - Double currency formatting
-
 extension Double {
     var hryvnia: String {
         let f = NumberFormatter()
@@ -36,8 +32,6 @@ extension Double {
         return "₴\(f.string(from: NSNumber(value: self)) ?? "0,00")"
     }
 }
-
-// MARK: - Date helpers
 
 extension Date {
     var sectionTitle: String {

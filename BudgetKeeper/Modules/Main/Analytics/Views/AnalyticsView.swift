@@ -1,8 +1,6 @@
 import UIKit
 import SnapKit
 
-// MARK: - DonutChartView
-
 final class DonutChartView: UIView {
     var segments: [(value: CGFloat, color: UIColor)] = [] { didSet { setNeedsDisplay() } }
 
@@ -41,8 +39,6 @@ final class DonutChartView: UIView {
         hole.fill()
     }
 }
-
-// MARK: - DonutChartCardView
 
 final class DonutChartCardView: UIView {
     private let titleLabel = UILabel()
@@ -92,8 +88,6 @@ final class DonutChartCardView: UIView {
     }
 }
 
-// MARK: - DonutLegendRow
-
 private final class DonutLegendRow: UIView {
     init(color: UIColor, name: String, amount: String) {
         super.init(frame: .zero)
@@ -137,8 +131,6 @@ private final class DonutLegendRow: UIView {
     required init?(coder: NSCoder) { fatalError() }
     override var intrinsicContentSize: CGSize { CGSize(width: UIView.noIntrinsicMetric, height: 22) }
 }
-
-// MARK: - BarChartView
 
 final class BarChartView: UIView {
     struct MonthData {
@@ -190,8 +182,6 @@ final class BarChartView: UIView {
         }
     }
 }
-
-// MARK: - BarChartCardView
 
 final class BarChartCardView: UIView {
     let chartView = BarChartView()
@@ -245,8 +235,6 @@ final class BarChartCardView: UIView {
     func update(data: [BarChartView.MonthData]) { chartView.data = data }
 }
 
-// MARK: - AreaChartView
-
 final class AreaChartView: UIView {
     struct PointData {
         let label: String
@@ -276,7 +264,6 @@ final class AreaChartView: UIView {
             return CGPoint(x: x, y: y)
         }
 
-        // Smooth bezier line
         let line = UIBezierPath()
         line.move(to: pt(0))
         for i in 1..<data.count {
@@ -286,7 +273,6 @@ final class AreaChartView: UIView {
                           controlPoint2: CGPoint(x: b.x - step / 2.5, y: b.y))
         }
 
-        // Gradient fill
         let fill = line.copy() as! UIBezierPath
         fill.addLine(to: CGPoint(x: pt(data.count - 1).x, y: chartH))
         fill.addLine(to: CGPoint(x: pt(0).x, y: chartH))
@@ -310,7 +296,6 @@ final class AreaChartView: UIView {
         line.lineJoinStyle = .round
         line.stroke()
 
-        // Dots at each data point
         for i in 0..<data.count {
             let p = pt(i)
             let outer = UIBezierPath(arcCenter: p, radius: 3.5, startAngle: 0, endAngle: .pi * 2, clockwise: true)
@@ -319,7 +304,6 @@ final class AreaChartView: UIView {
             AppColors.primary.setFill(); inner.fill()
         }
 
-        // Month labels
         let attrs: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 11),
             .foregroundColor: AppColors.textSecondary
@@ -333,8 +317,6 @@ final class AreaChartView: UIView {
         }
     }
 }
-
-// MARK: - AreaChartCardView
 
 final class AreaChartCardView: UIView {
     let chartView = AreaChartView()
@@ -366,8 +348,6 @@ final class AreaChartCardView: UIView {
 
     func update(data: [AreaChartView.PointData]) { chartView.data = data }
 }
-
-// MARK: - RankedExpenseRowView
 
 final class RankedExpenseRowView: UIView {
     init(rank: Int, name: String, amount: String) {
@@ -417,8 +397,6 @@ final class RankedExpenseRowView: UIView {
     }
     required init?(coder: NSCoder) { fatalError() }
 }
-
-// MARK: - AnalyticsView
 
 final class AnalyticsView: UIView {
     let scrollView    = UIScrollView()

@@ -139,7 +139,6 @@ final class RingProgressView: UIView {
         let radius = min(rect.width, rect.height) / 2 - 4
         let lineWidth: CGFloat = 5
 
-        // Background ring
         let bgPath = UIBezierPath(arcCenter: center, radius: radius,
                                    startAngle: -CGFloat.pi / 2,
                                    endAngle: 3 * CGFloat.pi / 2,
@@ -149,7 +148,6 @@ final class RingProgressView: UIView {
         bgPath.lineCapStyle = .round
         bgPath.stroke()
 
-        // Progress ring
         let endAngle = -CGFloat.pi / 2 + 2 * CGFloat.pi * progress
         let fgPath = UIBezierPath(arcCenter: center, radius: radius,
                                    startAngle: -CGFloat.pi / 2,

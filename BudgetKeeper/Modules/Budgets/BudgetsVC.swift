@@ -13,8 +13,8 @@ final class BudgetsViewController: UIViewController {
         budgetsView.backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         budgetsView.tableView.dataSource = self
         budgetsView.tableView.delegate   = self
+        budgetsView.periodSegment.addTarget(self, action: #selector(reloadData), for: .valueChanged)
 
-        // Add button in top-right
         let cfg = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
         addButton.setImage(UIImage(systemName: "plus", withConfiguration: cfg), for: .normal)
         addButton.tintColor = AppColors.primary
@@ -42,7 +42,13 @@ extension BudgetsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BudgetItemCell.id, for: indexPath) as! BudgetItemCell
         let b    = DataStore.shared.budgets[indexPath.row]
-        let spent = DataStore.shared.monthlySpent(for: b)
+        let g: Calendar.Component
+        switch budgetsView.periodSegment.selectedSegmentIndex {
+        case 0:  g = .weekOfYear
+        case 2:  g = .year
+        default: g = .month
+        }
+        let spent = DataStore.shared.spent(for: b, granularity: g)
         let pct   = b.limit > 0 ? Int(min(spent / b.limit * 100, 100)) : 0
         let color = UIColor(hex: b.colorHex) ?? AppColors.primary
         let spentStr = "\(spent.hryvnia) з \(b.limit.hryvnia)"
@@ -70,7 +76,7 @@ private extension BudgetsViewController {
     @objc func reloadData() { budgetsView.tableView.reloadData() }
 
     @objc func addTapped() {
-        let cats   = DataStore.expenseCategories
+        let cats   = DataStore.shared.categories(for: .expense)
         let colors = ["#FF9500", "#5856D6", "#34C759", "#0066FF", "#FF3B30"]
 
         let alert = UIAlertController(title: "Новий бюджет", message: nil, preferredStyle: .alert)
@@ -95,7 +101,29 @@ private extension BudgetsViewController {
                 DataStore.shared.addBudget(b)
             })
         }
+        sheet.addAction(UIAlertAction(title: "Нова категорія…", style: .default) { [weak self] _ in
+            self?.createCategory(colors: colors, limit: limit)
+        })
         sheet.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
         present(sheet, animated: true)
+    }
+
+    func createCategory(colors: [String], limit: Double) {
+        let alert = UIAlertController(title: "Нова категорія", message: nil, preferredStyle: .alert)
+        alert.addTextField { $0.placeholder = "Назва категорії" }
+        alert.addAction(UIAlertAction(title: "Додати", style: .default) { _ in
+            let name = alert.textFields?.first?.text?.trimmingCharacters(in: .whitespaces) ?? ""
+            guard !name.isEmpty else { return }
+            let catColors = ["#FF9500", "#5856D6", "#34C759", "#0066FF", "#FF3B30", "#8A8A8E"]
+            let cat = Category(id: UUID(), name: name, icon: "tag.fill",
+                               colorHex: catColors[DataStore.shared.customCategories.count % catColors.count],
+                               type: .expense)
+            DataStore.shared.addCategory(cat)
+            let idx = DataStore.shared.budgets.count
+            let b = Budget(id: UUID(), name: cat.name, limit: limit, categoryId: cat.id, colorHex: colors[idx % colors.count])
+            DataStore.shared.addBudget(b)
+        })
+        alert.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
+        present(alert, animated: true)
     }
 }

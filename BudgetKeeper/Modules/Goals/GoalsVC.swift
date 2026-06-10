@@ -40,7 +40,7 @@ extension GoalsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { 0 }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        addSavings(to: indexPath.row)
+        showGoalActions(at: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -60,7 +60,7 @@ private extension GoalsViewController {
 
     @objc func addTapped() {
         let colors = ["#FF9500", "#0066FF", "#34C759", "#5856D6", "#FF3B30"]
-        let alert = UIAlertController(title: "Новаціль", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Нова ціль", message: nil, preferredStyle: .alert)
         alert.addTextField { $0.placeholder = "Назва цілі" }
         alert.addTextField { tf in tf.placeholder = "Цільова сума (₴)"; tf.keyboardType = .decimalPad }
 
@@ -73,6 +73,55 @@ private extension GoalsViewController {
                          colorHex: colors[DataStore.shared.goals.count % colors.count],
                          icon: "target")
             DataStore.shared.addGoal(g)
+        })
+        alert.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
+        present(alert, animated: true)
+    }
+
+    func showGoalActions(at index: Int) {
+        let goal = DataStore.shared.goals[index]
+        let sheet = UIAlertController(title: goal.name, message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "Поповнити", style: .default) { [weak self] _ in
+            self?.addSavings(to: index)
+        })
+        sheet.addAction(UIAlertAction(title: "Редагувати", style: .default) { [weak self] _ in
+            self?.editGoal(at: index)
+        })
+        sheet.addAction(UIAlertAction(title: "Видалити", style: .destructive) { [weak self] _ in
+            self?.confirmDeleteGoal(at: index)
+        })
+        sheet.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
+        present(sheet, animated: true)
+    }
+
+    func editGoal(at index: Int) {
+        var goal = DataStore.shared.goals[index]
+        let alert = UIAlertController(title: "Редагувати ціль", message: nil, preferredStyle: .alert)
+        alert.addTextField { tf in tf.placeholder = "Назва цілі"; tf.text = goal.name }
+        alert.addTextField { tf in
+            tf.placeholder = "Цільова сума (₴)"
+            tf.keyboardType = .decimalPad
+            tf.text = goal.target == goal.target.rounded() ? String(Int(goal.target)) : String(goal.target)
+        }
+        alert.addAction(UIAlertAction(title: "Зберегти", style: .default) { _ in
+            let name   = alert.textFields?[0].text?.trimmingCharacters(in: .whitespaces) ?? ""
+            let target = Double(alert.textFields?[1].text?.replacingOccurrences(of: ",", with: ".") ?? "") ?? 0
+            guard !name.isEmpty, target > 0 else { return }
+            goal.name   = name
+            goal.target = target
+            DataStore.shared.updateGoal(goal)
+        })
+        alert.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
+        present(alert, animated: true)
+    }
+
+    func confirmDeleteGoal(at index: Int) {
+        let goal = DataStore.shared.goals[index]
+        let alert = UIAlertController(title: "Видалити «\(goal.name)»?",
+                                      message: "Цю дію не можна скасувати.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Видалити", style: .destructive) { _ in
+            DataStore.shared.deleteGoal(id: goal.id)
         })
         alert.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
         present(alert, animated: true)

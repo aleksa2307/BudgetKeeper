@@ -33,13 +33,11 @@ final class SettingsView: UIView {
         ]),
         Section(title: "ЗОВНІШНІЙ ВИГЛЯД", rows: [
             Row(title: "Тема", value: "Світла", icon: "sun.max.fill", color: AppColors.orange, accessory: .chevron),
-            Row(title: "Мова", value: "Українська", icon: "globe", color: AppColors.lightBlue, accessory: .chevron),
         ]),
         Section(title: "ДАНІ", rows: [
+            Row(title: "Категорії", value: nil, icon: "tag.fill", color: AppColors.primary, accessory: .chevron),
             Row(title: "Експорт у CSV", value: nil, icon: "arrow.up.doc.fill", color: AppColors.green, accessory: .info),
             Row(title: "Експорт у PDF", value: nil, icon: "doc.fill", color: AppColors.red, accessory: .info),
-            Row(title: "Резервна копія", value: nil, icon: "icloud.and.arrow.up.fill", color: AppColors.purple, accessory: .info),
-            Row(title: "Відновити з копії", value: nil, icon: "icloud.and.arrow.down.fill", color: AppColors.orange, accessory: .info),
             Row(title: "Очистити всі дані", value: nil, icon: "trash.fill", color: AppColors.red, accessory: .info),
         ]),
         Section(title: "ПРО ЗАСТОСУНОК", rows: [

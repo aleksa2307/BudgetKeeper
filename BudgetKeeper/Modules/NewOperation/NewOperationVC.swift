@@ -4,9 +4,10 @@ final class NewOperationViewController: UIViewController {
 
     private var operationView: NewOperationView { view as! NewOperationView }
 
+    var transactionToEdit: Transaction?
+
     private var selectedCategoryId: UUID?
     private var selectedAccountId: UUID?
-    private var selectedToAccountId: UUID?
     private var selectedDate: Date = Date()
     private var noteText: String = ""
 
@@ -17,6 +18,7 @@ final class NewOperationViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         operationView.dateRow.setValue(selectedDate.formattedUkrainian)
         setupActions()
+        if let t = transactionToEdit { prefill(with: t) }
     }
 }
 
@@ -31,10 +33,29 @@ private extension NewOperationViewController {
         operationView.keypadView.onDelete  = { [weak self] in self?.operationView.deleteLastDigit() }
 
         operationView.categoryRow.onTap = { [weak self] in self?.pickCategory() }
-        operationView.accountRow.onTap  = { [weak self] in self?.pickAccount(forDestination: false) }
-        operationView.toAccountRow.onTap = { [weak self] in self?.pickAccount(forDestination: true) }
+        operationView.accountRow.onTap  = { [weak self] in self?.pickAccount() }
         operationView.dateRow.onTap     = { [weak self] in self?.pickDate() }
         operationView.noteRow.onTap     = { [weak self] in self?.pickNote() }
+    }
+
+    func prefill(with t: Transaction) {
+        operationView.titleLabel.text = "Редагувати операцію"
+        let segIdx = t.type == .income ? 1 : 0
+        operationView.typeSegment.selectedSegmentIndex = segIdx
+        operationView.setType(segIdx)
+        operationView.setAmount(t.amount)
+
+        selectedCategoryId = t.categoryId
+        operationView.categoryRow.setValue(DataStore.shared.category(for: t.categoryId)?.name ?? "Інше")
+
+        selectedAccountId = t.accountId
+        operationView.accountRow.setValue(DataStore.shared.account(for: t.accountId)?.name ?? "Рахунок")
+
+        selectedDate = t.date
+        operationView.dateRow.setValue(t.date.formattedUkrainian)
+
+        noteText = t.note
+        operationView.noteRow.setValue(t.note.isEmpty ? "Додати нотатку..." : t.note)
     }
 
     @objc func cancelTapped() { dismiss(animated: true) }
@@ -54,24 +75,23 @@ private extension NewOperationViewController {
             return
         }
         let segIdx = operationView.typeSegment.selectedSegmentIndex
-        let type: TransactionType = segIdx == 0 ? .expense : segIdx == 1 ? .income : .transfer
-
-        if type == .transfer && selectedToAccountId == nil {
-            showError("Виберіть рахунок призначення")
-            return
-        }
+        let type: TransactionType = segIdx == 0 ? .expense : .income
 
         let t = Transaction(
-            id: UUID(),
+            id: transactionToEdit?.id ?? UUID(),
             type: type,
             amount: amount,
             categoryId: categoryId,
             accountId: accountId,
-            toAccountId: selectedToAccountId,
+            toAccountId: nil,
             date: selectedDate,
             note: noteText
         )
-        DataStore.shared.addTransaction(t)
+        if transactionToEdit != nil {
+            DataStore.shared.updateTransaction(t)
+        } else {
+            DataStore.shared.addTransaction(t)
+        }
         dismiss(animated: true)
     }
 
@@ -83,10 +103,8 @@ private extension NewOperationViewController {
 
     func pickCategory() {
         let segIdx = operationView.typeSegment.selectedSegmentIndex
-        let cats: [Category]
-        if segIdx == 0      { cats = DataStore.expenseCategories }
-        else if segIdx == 1 { cats = DataStore.incomeCategories }
-        else                { cats = DataStore.expenseCategories }
+        let type: TransactionType = segIdx == 0 ? .expense : .income
+        let cats = DataStore.shared.categories(for: type)
 
         let sheet = UIAlertController(title: "Категорія", message: nil, preferredStyle: .actionSheet)
         for cat in cats {
@@ -95,11 +113,32 @@ private extension NewOperationViewController {
                 self?.operationView.categoryRow.setValue(cat.name)
             })
         }
+        sheet.addAction(UIAlertAction(title: "Нова категорія…", style: .default) { [weak self] _ in
+            self?.createCategory(type: type)
+        })
         sheet.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
         present(sheet, animated: true)
     }
 
-    func pickAccount(forDestination: Bool) {
+    func createCategory(type: TransactionType) {
+        let alert = UIAlertController(title: "Нова категорія", message: nil, preferredStyle: .alert)
+        alert.addTextField { $0.placeholder = "Назва категорії" }
+        alert.addAction(UIAlertAction(title: "Додати", style: .default) { [weak self] _ in
+            let name = alert.textFields?.first?.text?.trimmingCharacters(in: .whitespaces) ?? ""
+            guard !name.isEmpty else { return }
+            let colors = ["#FF9500", "#5856D6", "#34C759", "#0066FF", "#FF3B30", "#8A8A8E"]
+            let cat = Category(id: UUID(), name: name, icon: "tag.fill",
+                               colorHex: colors[DataStore.shared.customCategories.count % colors.count],
+                               type: type)
+            DataStore.shared.addCategory(cat)
+            self?.selectedCategoryId = cat.id
+            self?.operationView.categoryRow.setValue(cat.name)
+        })
+        alert.addAction(UIAlertAction(title: "Скасувати", style: .cancel))
+        present(alert, animated: true)
+    }
+
+    func pickAccount() {
         let accounts = DataStore.shared.accounts
         guard !accounts.isEmpty else {
             showError("Спочатку додайте рахунок у розділі «Ще → Рахунки»")
@@ -108,13 +147,8 @@ private extension NewOperationViewController {
         let sheet = UIAlertController(title: "Рахунок", message: nil, preferredStyle: .actionSheet)
         for acc in accounts {
             sheet.addAction(UIAlertAction(title: "\(acc.name) (\(acc.balance.hryvnia))", style: .default) { [weak self] _ in
-                if forDestination {
-                    self?.selectedToAccountId = acc.id
-                    self?.operationView.toAccountRow.setValue(acc.name)
-                } else {
-                    self?.selectedAccountId = acc.id
-                    self?.operationView.accountRow.setValue(acc.name)
-                }
+                self?.selectedAccountId = acc.id
+                self?.operationView.accountRow.setValue(acc.name)
             })
         }
         sheet.addAction(UIAlertAction(title: "Скасувати", style: .cancel))

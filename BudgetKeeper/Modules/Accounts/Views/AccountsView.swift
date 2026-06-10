@@ -35,7 +35,6 @@ private extension AccountsView {
         headerLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         headerLabel.textColor = AppColors.textPrimary
 
-        // Balance card
         balanceCard.backgroundColor = AppColors.primary
         balanceCard.layer.cornerRadius = 24
 
@@ -47,12 +46,10 @@ private extension AccountsView {
         balanceAmountLabel.font = UIFont.systemFont(ofSize: 36, weight: .bold)
         balanceAmountLabel.textColor = .white
 
-        // Table
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.register(AccountCell.self, forCellReuseIdentifier: AccountCell.id)
 
-        // FAB add button
         addButton.backgroundColor = AppColors.primary
         addButton.layer.cornerRadius = 28
         addButton.layer.shadowColor = AppColors.primary.cgColor

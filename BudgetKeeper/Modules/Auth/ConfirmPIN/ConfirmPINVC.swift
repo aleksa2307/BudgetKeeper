@@ -6,7 +6,6 @@ final class ConfirmPINViewController: UIViewController {
     private let originalPIN: String
     private var enteredDigits: [String] = []
 
-    // Passed from CreatePINVC; nil during initial setup
     var onSuccess: (() -> Void)?
 
     init(pin: String) {
@@ -52,10 +51,8 @@ private extension ConfirmPINViewController {
         if enteredDigits.joined() == originalPIN {
             DataStore.shared.pin = originalPIN
             if let onSuccess = onSuccess {
-                // Change-PIN flow: dismiss the whole modal back to Settings
                 onSuccess()
             } else {
-                // Initial setup flow: go to main app
                 let tabBar = MainTabBarController()
                 tabBar.modalPresentationStyle = .fullScreen
                 present(tabBar, animated: true)

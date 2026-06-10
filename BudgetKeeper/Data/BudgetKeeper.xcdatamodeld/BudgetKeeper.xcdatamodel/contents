@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24E248" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="NO" userDefinedModelVersionIdentifier="">
+    <entity name="CDAccount" representedClassName="CDAccount" syncable="YES">
+        <attribute name="balance" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="colorHex" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="currency" attributeType="String"/>
+        <attribute name="icon" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="typeName" attributeType="String"/>
+    </entity>
+    <entity name="CDBudget" representedClassName="CDBudget" syncable="YES">
+        <attribute name="categoryId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="colorHex" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="limit" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+    </entity>
+    <entity name="CDCategory" representedClassName="CDCategory" syncable="YES">
+        <attribute name="colorHex" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="icon" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <entity name="CDDebt" representedClassName="CDDebt" syncable="YES">
+        <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dueDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="iOwe" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="note" attributeType="String"/>
+        <attribute name="personName" attributeType="String"/>
+    </entity>
+    <entity name="CDGoal" representedClassName="CDGoal" syncable="YES">
+        <attribute name="colorHex" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="icon" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="saved" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="target" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="CDRecurringPayment" representedClassName="CDRecurringPayment" syncable="YES">
+        <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="colorHex" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="icon" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isPaused" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="nextDate" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="CDTransaction" representedClassName="CDTransaction" syncable="YES">
+        <attribute name="accountId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="categoryId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="note" attributeType="String"/>
+        <attribute name="toAccountId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="CDAccount" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="CDBudget" positionX="126" positionY="-18" width="128" height="119"/>
+        <element name="CDCategory" positionX="315" positionY="-18" width="128" height="119"/>
+        <element name="CDDebt" positionX="-63" positionY="171" width="128" height="134"/>
+        <element name="CDGoal" positionX="126" positionY="171" width="128" height="134"/>
+        <element name="CDRecurringPayment" positionX="315" positionY="171" width="128" height="149"/>
+        <element name="CDTransaction" positionX="126" positionY="360" width="128" height="164"/>
+    </elements>
+</model>

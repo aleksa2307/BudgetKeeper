@@ -98,8 +98,6 @@ private extension MoreView {
     }
 }
 
-// MARK: - MoreMenuRow
-
 private final class MoreMenuRow: UIView {
 
     private let iconContainer = UIView()
@@ -162,7 +160,6 @@ private final class MoreMenuRow: UIView {
             $0.trailing.lessThanOrEqualTo(chevron.snp.leading).offset(-8)
             $0.top.equalTo(snp.centerY).offset(2)
         }
-        // Separator indented from leading edge of text (16 padding + 44 icon + 16 gap = 76)
         separator.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(76)
             $0.trailing.bottom.equalToSuperview()

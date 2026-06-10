@@ -9,7 +9,7 @@ final class OperationsView: UIView {
     let filterStackView = UIStackView()
     let tableView = UITableView(frame: .zero, style: .grouped)
 
-    private let filters = ["Усі", "Доходи", "Витрати", "Перекази"]
+    private let filters = ["Усі", "Доходи", "Витрати"]
     var selectedFilter = 0
     var onFilterChanged: (() -> Void)?
 

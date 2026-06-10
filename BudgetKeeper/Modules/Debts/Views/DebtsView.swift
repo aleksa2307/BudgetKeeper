@@ -5,14 +5,15 @@ final class DebtsView: UIView {
 
     let headerLabel = UILabel()
     let backButton = UIButton(type: .system)
-    let iOweCard = DebtSummaryCard(title: "Я винна", amount: "₴5 200,00", color: AppColors.red)
-    let owedCard = DebtSummaryCard(title: "Мені винні", amount: "₴12 800,00", color: AppColors.green)
+    let iOweCard = DebtSummaryCard(title: "Я винна", amount: "₴0,00", color: AppColors.red)
+    let owedCard = DebtSummaryCard(title: "Мені винні", amount: "₴0,00", color: AppColors.green)
     let filterScrollView = UIScrollView()
     let filterStackView = UIStackView()
     let tableView = UITableView(frame: .zero, style: .plain)
 
     private let filters = ["Усі", "Я винна", "Мені винні"]
-    private var selectedFilter = 0
+    private(set) var selectedFilter = 0
+    var onFilterChanged: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -107,10 +108,13 @@ private extension DebtsView {
                 updateFilterButton(btn, selected: btn.tag == selectedFilter)
             }
         }
+        onFilterChanged?()
     }
 }
 
 final class DebtSummaryCard: UIView {
+    private let amountLabel = UILabel()
+
     init(title: String, amount: String, color: UIColor) {
         super.init(frame: .zero)
         backgroundColor = color.withAlphaComponent(0.1)
@@ -121,7 +125,6 @@ final class DebtSummaryCard: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         titleLabel.textColor = color
 
-        let amountLabel = UILabel()
         amountLabel.text = amount
         amountLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         amountLabel.textColor = AppColors.textPrimary
@@ -133,6 +136,8 @@ final class DebtSummaryCard: UIView {
         stack.snp.makeConstraints { $0.edges.equalToSuperview().inset(16) }
     }
     required init?(coder: NSCoder) { fatalError() }
+
+    func update(amount: String) { amountLabel.text = amount }
 }
 
 final class DebtCell: UITableViewCell {

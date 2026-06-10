@@ -7,14 +7,13 @@ final class NewOperationView: UIView {
     let titleLabel    = UILabel()
     let saveButton    = UIButton(type: .system)
     let dragHandle    = UIView()
-    let typeSegment   = UISegmentedControl(items: ["Витрата", "Дохід", "Переказ"])
+    let typeSegment   = UISegmentedControl(items: ["Витрата", "Дохід"])
     let currencyLabel = UILabel()
     let amountLabel   = UILabel()
     let formCard      = UIView()
 
     let categoryRow = FormRowView(icon: "tag",        label: "Категорія", value: "Виберіть категорію")
     let accountRow  = FormRowView(icon: "creditcard", label: "Рахунок",   value: "Виберіть рахунок")
-    let toAccountRow = FormRowView(icon: "arrow.right.circle", label: "На рахунок", value: "Виберіть рахунок")
     let dateRow     = FormRowView(icon: "calendar",   label: "Дата",      value: Date().formattedUkrainian)
     let noteRow     = FormRowView(icon: "doc.text",   label: "Нотатка",   value: "Додати нотатку...")
 
@@ -29,8 +28,6 @@ final class NewOperationView: UIView {
     }
 
     required init?(coder: NSCoder) { fatalError() }
-
-    // MARK: - Amount
 
     func appendDigit(_ digit: String) {
         if amountString == "0" { amountString = digit }
@@ -53,18 +50,21 @@ final class NewOperationView: UIView {
         Double(amountString.replacingOccurrences(of: ",", with: ".")) ?? 0
     }
 
+    func setAmount(_ value: Double) {
+        amountString = value == value.rounded()
+            ? String(Int(value))
+            : String(value).replacingOccurrences(of: ".", with: ",")
+        updateAmountDisplay()
+    }
+
     private func updateAmountDisplay() { amountLabel.text = amountString }
 
     func setType(_ index: Int) {
         switch index {
         case 0: amountLabel.textColor = AppColors.red
         case 1: amountLabel.textColor = AppColors.green
-        case 2: amountLabel.textColor = AppColors.primary
         default: break
         }
-        // Show/hide toAccountRow
-        let isTransfer = index == 2
-        toAccountRow.isHidden = !isTransfer
     }
 }
 
@@ -85,6 +85,7 @@ private extension NewOperationView {
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         titleLabel.textColor = AppColors.textPrimary
         titleLabel.textAlignment = .center
+        titleLabel.setContentHuggingPriority(.required, for: .vertical)
 
         saveButton.setTitle("Зберегти", for: .normal)
         saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
@@ -100,12 +101,11 @@ private extension NewOperationView {
         amountLabel.text = "0"
         amountLabel.font = UIFont.systemFont(ofSize: 48, weight: .bold)
         amountLabel.textColor = AppColors.red
+        amountLabel.setContentHuggingPriority(.required, for: .vertical)
 
         formCard.backgroundColor = AppColors.background
         formCard.layer.cornerRadius = 16
         formCard.clipsToBounds = true
-
-        toAccountRow.isHidden = true
     }
 
     func setupConstraints() {
@@ -118,12 +118,15 @@ private extension NewOperationView {
             $0.width.equalTo(40)
             $0.height.equalTo(4)
         }
-        cancelButton.snp.makeConstraints { $0.top.equalToSuperview().offset(16); $0.leading.equalToSuperview().offset(16) }
-        titleLabel.snp.makeConstraints { $0.top.equalToSuperview().offset(20); $0.centerX.equalToSuperview() }
-        saveButton.snp.makeConstraints { $0.top.equalToSuperview().offset(16); $0.trailing.equalToSuperview().offset(-16) }
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(dragHandle.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+        }
+        cancelButton.snp.makeConstraints { $0.centerY.equalTo(titleLabel); $0.leading.equalToSuperview().offset(16) }
+        saveButton.snp.makeConstraints { $0.centerY.equalTo(titleLabel); $0.trailing.equalToSuperview().offset(-16) }
 
         typeSegment.snp.makeConstraints {
-            $0.top.equalTo(cancelButton.snp.bottom).offset(12)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(42)
         }
@@ -138,7 +141,7 @@ private extension NewOperationView {
             $0.leading.trailing.equalToSuperview().inset(16)
         }
 
-        let rows: [FormRowView] = [categoryRow, accountRow, toAccountRow, dateRow, noteRow]
+        let rows: [FormRowView] = [categoryRow, accountRow, dateRow, noteRow]
         var prev: UIView? = nil
         for (i, row) in rows.enumerated() {
             formCard.addSubview(row)
@@ -170,8 +173,6 @@ private extension NewOperationView {
         }
     }
 }
-
-// MARK: - FormRowView
 
 final class FormRowView: UIView {
     var onTap: (() -> Void)?
@@ -223,8 +224,6 @@ final class FormRowView: UIView {
 
     @objc private func tapped() { onTap?() }
 }
-
-// MARK: - NumericKeypadView
 
 final class NumericKeypadView: UIView {
 
