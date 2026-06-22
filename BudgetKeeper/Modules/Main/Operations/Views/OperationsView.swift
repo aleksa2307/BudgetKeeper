@@ -8,10 +8,17 @@ final class OperationsView: UIView {
     let filterScrollView = UIScrollView()
     let filterStackView = UIStackView()
     let tableView = UITableView(frame: .zero, style: .grouped)
+    let emptyLabel = UILabel()
 
     private let filters = ["Усі", "Доходи", "Витрати"]
     var selectedFilter = 0
     var onFilterChanged: (() -> Void)?
+    var onSearchChanged: (() -> Void)?
+
+    /// Trimmed search text. Empty when the field is blank or whitespace-only.
+    var searchQuery: String {
+        (searchBar.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,6 +40,18 @@ private extension OperationsView {
         searchBar.placeholder = "Пошук"
         searchBar.searchBarStyle = .minimal
         searchBar.backgroundColor = .clear
+        searchBar.delegate = self
+        searchBar.autocorrectionType = .no
+        searchBar.smartQuotesType = .no
+        searchBar.returnKeyType = .search
+        searchBar.enablesReturnKeyAutomatically = false
+
+        emptyLabel.text = "Нічого не знайдено"
+        emptyLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        emptyLabel.textColor = AppColors.textSecondary
+        emptyLabel.textAlignment = .center
+        emptyLabel.numberOfLines = 0
+        emptyLabel.isHidden = true
 
         filterScrollView.showsHorizontalScrollIndicator = false
         filterStackView.axis = .horizontal
@@ -53,11 +72,12 @@ private extension OperationsView {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
+        tableView.keyboardDismissMode = .onDrag
         tableView.register(OperationCell.self, forCellReuseIdentifier: OperationCell.id)
     }
 
     func setupConstraints() {
-        [headerLabel, searchBar, filterScrollView, tableView].forEach { addSubview($0) }
+        [headerLabel, searchBar, filterScrollView, tableView, emptyLabel].forEach { addSubview($0) }
         filterScrollView.addSubview(filterStackView)
 
         headerLabel.snp.makeConstraints {
@@ -81,6 +101,11 @@ private extension OperationsView {
             $0.top.equalTo(filterScrollView.snp.bottom).offset(12)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        emptyLabel.snp.makeConstraints {
+            $0.centerX.equalTo(tableView)
+            $0.centerY.equalTo(tableView).offset(-40)
+            $0.leading.trailing.equalToSuperview().inset(32)
+        }
     }
 
     func updateFilterButton(_ btn: UIButton, selected: Bool) {
@@ -96,6 +121,16 @@ private extension OperationsView {
             }
         }
         onFilterChanged?()
+    }
+}
+
+extension OperationsView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        onSearchChanged?()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 
